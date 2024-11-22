@@ -3,9 +3,12 @@ let btnCrear = document.getElementById("btnCrear");
 let btnVisualizar = document.getElementById("btnVisualizar");
 
 async function crearRey() {
+    //Expresion regular que solo permite introducir los nombres de los reyes magos
     let regex = /^(Melchor|Gaspar|Baltasar)$/i;
+    //Comparamos la expresion regular con el valor introducido en el input
     if (regex.test(rey.value)) {
         document.getElementById("mensaje").textContent = "";
+        //Hacemos una peticion post pasandole el nombre del rey introducido en el input
         let body = { nombre: rey.value }
         try {
             const response = await fetch("http://127.0.0.1:8000/reyes_magos/", {
@@ -29,17 +32,14 @@ async function crearRey() {
 }
 
 async function obtenerReyes() {
-
+    //Hacemos una peticion get para obtener todos los reyes magos
     try {
-        // Hacemos la petición usando fetch con async y await
         const response = await fetch("http://127.0.0.1:8000/reyes_magos/");
 
-        // Validación de la respuesta HTTP
         if (!response.ok) {
             throw new Error('Error en la solicitud: ' + response.statusText);
         }
 
-        // Convertimos la respuesta a JSON
         const data = await response.json();
 
         // Llamamos a la función que crea la tabla con los datos
@@ -77,7 +77,9 @@ function crearTabla(data) {
         td1.textContent = element.nombre;
         let btnEliminar = document.createElement("button");
         btnEliminar.textContent = "Eliminar";
+        //Añadimos un eventListener por cada boton eliminar de la tabla
         btnEliminar.addEventListener("click", async () => {
+            //Hacemos un Delete pasandole el id del rey mago
             try {
                 const response = await fetch("http://127.0.0.1:8000/reyes_magos/" + element.id, {
                     method: "Delete"

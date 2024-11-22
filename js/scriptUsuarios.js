@@ -4,8 +4,10 @@ let btnCrear = document.getElementById("btnCrear");
 let btnVisualizar = document.getElementById("btnVisualizar");
 
 async function crearUsuario() {
+    //Comprobamos que la edad no sea mas de 15 años y que el campo usuario no este vacio
     let regex = /^(0|[1-9]|1[0-5])$/;
     if (regex.test(edad.value) && usuario.value != "") {
+        //Hacemos un post pasando el nombre y edad introducida por el usuario
         let body = { nombre: usuario.value, edad: edad.value }
         try {
             const response = await fetch("http://127.0.0.1:8000/usuarios/", {
@@ -32,18 +34,16 @@ async function crearUsuario() {
 
 async function obtenerUsuarios() {
     document.getElementById("mensaje").textContent = "";
+    //Hacemos una peticion GET para obtener todos los usuarios
     try {
-        // Hacemos la petición usando fetch con async y await
         const response = await fetch("http://127.0.0.1:8000/usuarios/");
 
-        // Validación de la respuesta HTTP
         if (!response.ok) {
             throw new Error('Error en la solicitud: ' + response.statusText);
         }
 
-        // Convertimos la respuesta a JSON
         const data = await response.json();
-
+        //Llamamos a la funcion para crear la tabla pasandole los datos
         crearTabla(data);
         console.log(data);
 
@@ -75,7 +75,9 @@ function crearTabla(data) {
         td1.textContent = element.edad;
         let btnEliminar = document.createElement("button");
         btnEliminar.textContent = "Eliminar";
+        //Añadimos un eventListener a cada boton de eliminar que se creara en la tabla
         btnEliminar.addEventListener("click", async () => {
+            //Haremos un Delete pasandole el id del usuario
             try {
                 const response = await fetch("http://127.0.0.1:8000/usuarios/" + element.id, {
                     method: "Delete"
@@ -84,7 +86,6 @@ function crearTabla(data) {
                     throw new Error("Error en la solicitud: " + response.statusText);
                 }
                 const data = await response.json();
-                console.log(data);
             } catch (error) {
                 console.error("Error");
             }

@@ -1,19 +1,18 @@
 let selectUsuario = document.getElementById("selectUsuarios");
 
 async function llenarSelect() {
+    //Hacemos una peticion GET para obtener todos los usuarios
     try {
-        // Hacemos la petición usando fetch con async y await
         const response = await fetch("http://127.0.0.1:8000/usuarios/");
 
-        // Validación de la respuesta HTTP
         if (!response.ok) {
             throw new Error('Error en la solicitud: ' + response.statusText);
         }
 
-        // Convertimos la respuesta a JSON
         const data = await response.json();
         console.log(data);
 
+        //Rellenamos el select de manera dinamica con los usuarios que hay en la base de datos
         data.forEach(element => {
             let option = document.createElement("option");
             option.textContent = element.nombre;
@@ -26,19 +25,20 @@ async function llenarSelect() {
     }
 }
 
+//Funcion que se ejecutara con cada cambio en el select
 document.getElementById("selectUsuarios").addEventListener("change", async () => {
     let idUsuario = 0;
     let edad = 0;
     try {
-        // Hacemos la petición usando fetch con async y await
+        //Hacemos una peticion GET para obtener todos los usuarios
         const response = await fetch("http://127.0.0.1:8000/usuarios/");
 
-        // Validación de la respuesta HTTP
         if (!response.ok) {
             throw new Error('Error en la solicitud: ' + response.statusText);
         }
-        // Convertimos la respuesta a JSON
         const data = await response.json();
+        //Comparamos el nombre del usuario con el seleccionado.
+        //En caso afirmativo se almacena el id del usuario y su edad
         data.forEach(element => {
             if (element.nombre === selectUsuario.value) {
                 idUsuario = parseInt(element.id);
@@ -46,6 +46,7 @@ document.getElementById("selectUsuarios").addEventListener("change", async () =>
             }
         });
 
+        //Hacemos una peticion GET para obtener todas las cartas
         const responseCarta = await fetch("http://127.0.0.1:8000/cartas/" + idUsuario);
         if (!responseCarta.ok) {
             document.getElementById("cartas-container").innerHTML = "";
@@ -58,6 +59,7 @@ document.getElementById("selectUsuarios").addEventListener("change", async () =>
         const dataCarta = await responseCarta.json();
         console.log(dataCarta);
 
+        //Funcion que se encargara de crear la tabla
         crearTabla(dataCarta, edad);
 
     } catch (error) {
@@ -106,12 +108,15 @@ async function crearTabla(dataCarta, edad){
         td2.textContent = element.juguetes_ids.length;
         let btnVisualizar = document.createElement("button");
         btnVisualizar.textContent = "Visualizar";
+        //Añadimos un eventListener por cada boton de visualizar
         btnVisualizar.addEventListener("click", () => {
             contenedorCarta.innerHTML = "";
             let parrafo = document.createElement("p");
             parrafo.setAttribute("id", "parrafo");
+            //Mostramos la carta con la informacion almacenada previamente del rey mago, el nombre del usuario y la edad
             parrafo.textContent = "Querido " + reyMago + " Soy " + selectUsuario.value + " y tengo " + edad + " años. Me gustaria ";
             contenedorCarta.append(parrafo);
+            //Recorremos el array de juguetes
             element.juguetes_ids.forEach(juguete => {
                 let imagenCarta = document.createElement("img");
                 imagenCarta.setAttribute("src", "../img/" + juguete.imagen);
