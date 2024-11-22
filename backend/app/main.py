@@ -190,7 +190,7 @@ def get_cartas_por_usuario(usuario_id: int, db: Session = Depends(get_db)):
 @app.delete("/cartas/{carta_id}")
 def eliminar_carta(carta_id: int, db: Session = Depends(get_db)):
     try:
-        carta_eliminada = crud.delete_juguete(db, carta_id)
+        carta_eliminada = crud.delete_carta(db, carta_id)
         return {"msg": f"Carta con ID {carta_id} ha sido eliminado", "Carta": carta_eliminada}
     except NoResultFound:
         raise HTTPException(status_code=404, detail="carta no encontrado")

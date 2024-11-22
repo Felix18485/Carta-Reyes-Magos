@@ -1,5 +1,4 @@
 let selectUsuario = document.getElementById("selectUsuarios");
-
 async function llenarSelect() {
     //Hacemos una peticion GET para obtener todos los usuarios
     try {
@@ -68,8 +67,8 @@ document.getElementById("selectUsuarios").addEventListener("change", async () =>
     }
 })
 
-async function crearTabla(dataCarta, edad){
-    
+async function crearTabla(dataCarta, edad) {
+
     let contenedor = document.getElementById("cartas-container");
     let contenedorCarta = document.createElement("div");
     contenedor.innerHTML = "";
@@ -140,15 +139,45 @@ async function crearTabla(dataCarta, edad){
             }
         })
         tabla.append(thead, tr, td, td1, td2, btnEliminar, btnVisualizar);
-        contenedor.append(tabla,contenedorCarta);
-        document.getElementById("btnOrdenar").addEventListener("click", () => {
-            // Ordenar las cartas por la cantidad de juguetes de mayor a menor
-            dataCarta.sort((a, b) => b.juguetes_ids.length - a.juguetes_ids.length);
-
-            // Limpiar el contenedor de cartas y volver a generar la tabla ordenada
-            contenedor.innerHTML = "";
-            contenedor.append(crearTabla(dataCarta), contenedorCarta);
-        });
+        contenedor.append(tabla, contenedorCarta);
     });
 }
+
+document.getElementById("btnOrdenar").addEventListener("click", async () => {
+    let idUsuario = 0;
+    let edad = 0;
+    try {
+        //Hacemos una peticion GET para obtener todos los usuarios
+        const response = await fetch("http://127.0.0.1:8000/usuarios/");
+
+        if (!response.ok) {
+            throw new Error('Error en la solicitud: ' + response.statusText);
+        }
+        const data = await response.json();
+        //Comparamos el nombre del usuario con el seleccionado.
+        //En caso afirmativo se almacena el id del usuario y su edad
+        data.forEach(element => {
+            if (element.nombre === selectUsuario.value) {
+                idUsuario = parseInt(element.id);
+                edad = parseInt(element.edad);
+            }
+        });
+        
+        const responseCarta = await fetch("http://127.0.0.1:8000/cartas/" + idUsuario);
+        if (!responseCarta.ok) {
+            throw new Error('Error en la solicitud: ' + responseCarta.statusText);
+        }
+
+        const dataCarta = await responseCarta.json();
+        // Ordenar las cartas por la cantidad de juguetes de mayor a menor
+        dataCarta.sort((a, b) => b.juguetes_ids.length - a.juguetes_ids.length);
+
+        // Limpiar el contenedor de cartas y volver a generar la tabla ordenada
+        document.getElementById("cartas-container").innerHTML = "";
+        crearTabla(dataCarta, edad);
+    } catch (error) {
+        // Capturamos y mostramos el error
+        console.error("Error");
+    }
+});
 llenarSelect();
