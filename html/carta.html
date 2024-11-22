@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escribir carta</title>
+    <script src="../js/scriptCarta.js" defer></script>
+    <link rel="stylesheet" href="../frontend/styles.css">
+</head>
+<body>
+    <div id="container">
+        <h1>Carta a los reyes</h1>
+        <label>Usuarios: </label>
+        <select id="selectUsuarios">
+            <option>---</option>
+        </select>
+        <label>Reyes: </label>
+        <select id="selectReyes">
+            <option>---</option>
+        </select>
+        <label>Busca un juguete: </label>
+        <input type="text" id="buscador">
+        <div id="juguetesContainer"></div>
+        <div id="cartaContainer">
+        </div>
+        <button id="crearCarta">Crear carta</button>
+        <a href="../frontend/index.html">
+            <button>Volver al inicio</button>
+        </a>
+    </div>
+</body>
+</html>

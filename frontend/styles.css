@@ -1,0 +1,134 @@
+/* Estilo general para todas las páginas */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Contenedor principal */
+#container {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Títulos */
+h1 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+/* Etiquetas */
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+/* Campos de entrada */
+input[type="text"], input[type="file"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+/* Botones */
+input[type="button"],
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+input[type="button"]:hover,
+button:hover {
+    background-color: #45a049;
+}
+
+/* Mensaje */
+#mensaje {
+    margin: 10px 0;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+/* Tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #4CAF50;
+    color: white;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+td img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #f44336;
+    padding: 5px 10px;
+}
+
+button:hover {
+    background-color: #e53935;
+}
+
+/* Enlace al inicio */
+a {
+    text-decoration: none;
+}
+
+/* Estilo para las páginas específicas */
+
+/* Página de Usuarios */
+#container {
+    max-width: 500px; /* Se ajusta el tamaño para la página de usuarios */
+}
+
+/* Página de Juguetes */
+#container {
+    max-width: 600px; /* Tamaño diferente para la página de juguetes */
+}
+
+/* Página de Reyes Magos */
+#container {
+    max-width: 500px; /* Tamaño específico para la página de Reyes */
+}
+
+img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
